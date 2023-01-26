@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, Inject, Injectable, ViewChild} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   name: string;
@@ -24,15 +26,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-database-tabla',
   templateUrl: './database-tabla.component.html',
-  styleUrls: ['./database-tabla.component.css']
+  styleUrls: []
 })
 
 export class DatabaseTablaComponent {
-  constructor(){};
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-
-  
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  @ViewChild(MatPaginator) paginator !: MatPaginator;
+  ngAfterViewInit(){
+    this.dataSource.paginator! = this.paginator;
+  }
+  constructor(){}
 }
 
+@Injectable()
+export abstract class TablePaginationExample implements AfterViewInit{
+ 
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource =  new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  @ViewChild(MatPaginator) paginator! : MatPaginator;
+  ngAfterViewInit(): void {
+    this.dataSource.paginator=this.paginator;
+  }
+}
 
