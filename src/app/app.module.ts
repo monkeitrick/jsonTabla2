@@ -20,7 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatCardModule,
+    MatCardModule,  
     MatTableModule,
     MatPaginatorModule 
   ],
